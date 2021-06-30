@@ -3,6 +3,7 @@ package idh.java.flood.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -47,7 +48,7 @@ public class GUI extends JFrame implements ActionListener {
 		// Game - New - Retry
 		JMenuItem miNewRetry = new JMenuItem("Retry");
 		miNewRetry.setEnabled(false);
-		miNewRetry.setActionCommand("new game tetry");
+		miNewRetry.setActionCommand("new game retry");
 		miNewRetry.addActionListener(this);
 		
 		// Game - New - Custom
@@ -101,8 +102,36 @@ public class GUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("new game default")) {
+		switch (e.getActionCommand()) {
+		case "new game default":
+			System.out.println(e.getActionCommand());
 			uiCallbacks.newGame("sdkfjsdfj");
+			break;
+		case "about":
+			//TODO
+			System.out.println(e.getActionCommand());
+			break;
+		case "instructions":
+			//TODO
+			System.out.println(e.getActionCommand());
+			break;
+		case "exit":
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			break;
+		case "new game from seed":
+			//TODO
+			System.out.println(e.getActionCommand());
+			break;
+		case "new game custom":
+			//TODO
+			System.out.println(e.getActionCommand());
+			break;
+		case "new game retry":
+			//TODO
+			System.out.println(e.getActionCommand());
+			break;
+		default:
+			break;
 		}
 	}
 
