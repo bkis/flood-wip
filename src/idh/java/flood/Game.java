@@ -1,5 +1,7 @@
 package idh.java.flood;
 
+import java.util.Random;
+
 /*
  * Diese Klasse repräsentiert die Spiellogik und auch den Spielzustand
  * (das könnte man später noch auf getrennte Klassen aufteilen...)
@@ -17,6 +19,7 @@ public class Game {
 	
 	private String seed;
 	private int[][] board;
+	private int size;
 	private int colors;
 	private int maxTurns;
 	private int turns;
@@ -26,7 +29,24 @@ public class Game {
 	
 	public Game(String seed) {
 		this.seed = seed;
-		// TODO: Neues Spiel erzeugen...
+		
+		// generate size and color count
+		int n = Math.abs(seed.hashCode());
+		this.size = BOARD_SIZES[n % BOARD_SIZES.length];
+		this.colors = COLOR_COUNTS[n % COLOR_COUNTS.length];
+		
+		// generate game board
+		this.board = new int[this.size][this.size];
+		
+		// create random number generator based on seed (!)
+		Random rnd = new Random(n);
+		
+		// fill gabe board with (pseudo-) "random" color values
+		for (int y = 0; y < this.board.length; y++) {
+			for (int x = 0; x < this.board[y].length; x++) {
+				this.board[y][x] = rnd.nextInt(this.colors);
+			}
+		}
 	}
 	
 	
