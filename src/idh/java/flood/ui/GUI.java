@@ -1,12 +1,12 @@
 package idh.java.flood.ui;
 
-import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -108,17 +108,32 @@ public class GUI extends JFrame implements ActionListener {
 	private void draw(Game game) {
 		// TODO: Spielzustand darstellen (funktioniert noch nicht!)
 		System.out.println("SIZE: " + game.getSize());
-		System.out.println("COLOR: " + game.getColors());
+		System.out.println("COLORS: " + game.getColors());
 		
 		JPanel panel = new JPanel();
 		GridLayout layout = new GridLayout(game.getSize(), game.getSize());
 		panel.setLayout(layout);
 		
-		for (int i = 0; i < Math.sqrt(game.getSize()); i++) {
-			panel.add(new Button(":)"));
+		/*
+		 * Hier sind im Seminar einige Dinge schief gelaufen:
+		 * 
+		 * 1.) Die Anzahl der Zellen ist size*size, also size².
+		 * Natürlich brauchen wir also nicht Math.sqrt(size) (Quadratwurzel),
+		 * sondern Math.pow(size, 2) (size "to the power of 2")!
+		 * 
+		 * 2.) Wir benutzen für den Button natürlich JButton (die Swing-Klasse)
+		 * und nicht "Button".
+		 * 
+		 * 3.) Nach dem Hinzufügen der Buttons muss einmal pack() aufgerufen
+		 * werden, damit sich das Layout der Fensterkomponenten aktualisiert.
+		 */
+		
+		for (int i = 0; i < Math.pow(game.getSize(), 2); i++) {
+			panel.add(new JButton(Integer.toString(i)));
 		}
 		
 		add(panel);
+		pack();
 	}
 	
 	@Override
