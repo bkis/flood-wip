@@ -1,6 +1,8 @@
 package idh.java.flood.ui;
 
+import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -9,7 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
+
+import idh.java.flood.Game;
 
 
 public class GUI extends JFrame implements ActionListener {
@@ -99,13 +104,28 @@ public class GUI extends JFrame implements ActionListener {
 		menuBar.add(mInfo);
 		setJMenuBar(menuBar);
 	}
-
+	
+	private void draw(Game game) {
+		// TODO: Spielzustand darstellen (funktioniert noch nicht!)
+		System.out.println("SIZE: " + game.getSize());
+		System.out.println("COLOR: " + game.getColors());
+		
+		JPanel panel = new JPanel();
+		GridLayout layout = new GridLayout(game.getSize(), game.getSize());
+		panel.setLayout(layout);
+		
+		for (int i = 0; i < Math.sqrt(game.getSize()); i++) {
+			panel.add(new Button(":)"));
+		}
+		
+		add(panel);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "new game default":
-			System.out.println(e.getActionCommand());
-			uiCallbacks.newGame("sdkfjsdfj");
+			draw(uiCallbacks.newGame("Gib uns ein neues Spiel!"));
 			break;
 		case "about":
 			//TODO

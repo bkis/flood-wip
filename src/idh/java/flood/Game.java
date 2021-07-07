@@ -35,13 +35,16 @@ public class Game {
 		this.size = BOARD_SIZES[n % BOARD_SIZES.length];
 		this.colors = COLOR_COUNTS[n % COLOR_COUNTS.length];
 		
+		// set maximum number of turns
+		this.maxTurns = calculateMaxTurns(this.size, this.colors);
+		
 		// generate game board
 		this.board = new int[this.size][this.size];
 		
 		// create random number generator based on seed (!)
 		Random rnd = new Random(n);
 		
-		// fill gabe board with (pseudo-) "random" color values
+		// fill game board with (pseudo-) "random" color values
 		for (int y = 0; y < this.board.length; y++) {
 			for (int x = 0; x < this.board[y].length; x++) {
 				this.board[y][x] = rnd.nextInt(this.colors);
@@ -50,9 +53,56 @@ public class Game {
 	}
 	
 	
+	public Game flood(int colorValue) {
+		// TODO: Spielbrett fluten
+		// ...
+		return this;
+	}
+	
+	
 	private int calculateMaxTurns(int size, int colors) {
 		// TODO
 		return 10;
 	}
 
+
+	public String getSeed() {
+		return seed;
+	}
+
+
+	public int[][] getBoard() {
+		return board;
+	}
+
+
+	public int getSize() {
+		return size;
+	}
+
+
+	public int getColors() {
+		return colors;
+	}
+
+
+	public int getMaxTurns() {
+		return maxTurns;
+	}
+
+
+	public int getTurns() {
+		return turns;
+	}
+
+
+	public boolean isWon() {
+		return won;
+	}
+
+
+	public boolean isLost() {
+		return lost;
+	}
+	
 }

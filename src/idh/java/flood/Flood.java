@@ -21,6 +21,10 @@ public class Flood {
 				game = new Game(seed);
 				return game;
 			}
+			@Override
+			public Game flood(int colorValue) {
+				return game.flood(colorValue);
+			}
 		};
 		
 		// ... an die GUI übergeben!

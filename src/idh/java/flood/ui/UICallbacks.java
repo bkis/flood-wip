@@ -9,6 +9,7 @@ import idh.java.flood.Game;
 public interface UICallbacks {
 	
 	public Game newGame(String seed); // Aktion: Neues Spiel starten!
+	public Game flood(int colorValue); // Aktion: Spielbrett mit Farbe fluten
 	
 	// TODO ... es folgen hier noch weitere ...
 
