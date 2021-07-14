@@ -53,10 +53,40 @@ public class Game {
 	}
 	
 	
-	public Game flood(int colorValue) {
-		// TODO: Spielbrett fluten
-		// ...
+	public Game flood(int newColor) {
+		int oldColor = board[0][0];
+		if (newColor == oldColor) return this;
+		
+		flood(0, 0, oldColor, newColor);
+		// TODO: spiel gewonnen?
+		turns++;
+		// TODO: spiel verloren?
 		return this;
+	}
+	
+	
+	private void flood(
+			int x,
+			int y,
+			int oldColorValue,
+			int newColorValue) {
+		
+		// check if x and y are valid indices, else stop
+		if (x < 0 ||
+			x >= board.length ||
+			y < 0 ||
+			y >= board[x].length ||
+			board[x][y] != oldColorValue) return;
+		
+		board[x][y] = newColorValue;
+		
+		for (int[] offset : NEIGHBORS) {
+			flood(
+				x + offset[0],
+				y + offset[1],
+				oldColorValue,
+				newColorValue);
+		}
 	}
 	
 	

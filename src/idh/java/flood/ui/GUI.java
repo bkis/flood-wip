@@ -22,6 +22,7 @@ public class GUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private UICallbacks uiCallbacks;
+	private JPanel gamePanel;
 
 	public GUI(UICallbacks uiCallbacks) {
 		this.uiCallbacks = uiCallbacks;
@@ -105,42 +106,42 @@ public class GUI extends JFrame implements ActionListener {
 		setJMenuBar(menuBar);
 	}
 	
-	private void draw(Game game) {
-		// TODO: Spielzustand darstellen (funktioniert noch nicht!)
+	private void initGameBoard(Game game) {
 		System.out.println("SIZE: " + game.getSize());
 		System.out.println("COLORS: " + game.getColors());
 		
-		JPanel panel = new JPanel();
+		gamePanel = new JPanel();
 		GridLayout layout = new GridLayout(game.getSize(), game.getSize());
-		panel.setLayout(layout);
+		gamePanel.setLayout(layout);
 		
-		/*
-		 * Hier sind im Seminar einige Dinge schief gelaufen:
-		 * 
-		 * 1.) Die Anzahl der Zellen ist size*size, also size².
-		 * Natürlich brauchen wir also nicht Math.sqrt(size) (Quadratwurzel),
-		 * sondern Math.pow(size, 2) (size "to the power of 2")!
-		 * 
-		 * 2.) Wir benutzen für den Button natürlich JButton (die Swing-Klasse)
-		 * und nicht "Button".
-		 * 
-		 * 3.) Nach dem Hinzufügen der Buttons muss einmal pack() aufgerufen
-		 * werden, damit sich das Layout der Fensterkomponenten aktualisiert.
-		 */
 		
-		for (int i = 0; i < Math.pow(game.getSize(), 2); i++) {
-			panel.add(new JButton(Integer.toString(i)));
+		for (int y = 0; y < game.getBoard().length; y++) {
+			for (int x = 0; x < game.getBoard()[y].length; x++) {
+				Cell cell = new Cell(game.getBoard()[y][x]);
+				cell.setActionCommand("flood");
+				cell.addActionListener(this);
+				gamePanel.add(cell);
+			}
 		}
 		
-		add(panel);
+		add(gamePanel);
 		pack();
+	}
+	
+	private void flood(Game game) {
+		for (int y = 0; y < game.getBoard().length; y++) {
+			for (int x = 0; x < game.getBoard()[y].length; x++) {
+				((Cell)gamePanel.getComponent((y * game.getSize()) + x))
+					.setColorValue(game.getBoard()[y][x]);
+			}
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "new game default":
-			draw(uiCallbacks.newGame("Gib uns ein neues Spiel!"));
+			initGameBoard(uiCallbacks.newGame("Gib uns ein neues Spiel!!"));
 			break;
 		case "about":
 			//TODO
@@ -164,6 +165,13 @@ public class GUI extends JFrame implements ActionListener {
 		case "new game retry":
 			//TODO
 			System.out.println(e.getActionCommand());
+			break;
+		case "flood":
+			// TODO
+			if (e.getSource() instanceof Cell) {
+				Cell cell = (Cell) e.getSource();
+				flood(uiCallbacks.flood(cell.getColorValue()));
+			}
 			break;
 		default:
 			break;
